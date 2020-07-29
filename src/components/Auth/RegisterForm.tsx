@@ -44,8 +44,11 @@ class RegisterForm extends React.Component<
   }
 
   // Event listener for change in input fields.
-  onChange = (e) =>
-    this.setState({ ...this.state, [e.target.name]: e.target.value });
+  onChange = (e: React.FormEvent<HTMLInputElement>) =>
+    this.setState({
+      ...this.state,
+      [e.currentTarget.name]: e.currentTarget.value,
+    });
 
   checkUserInput = () => {
     const { email, password, confirmedPassword, errors } = this.state;
@@ -68,7 +71,7 @@ class RegisterForm extends React.Component<
   };
 
   // Event listener for form submission.
-  onSubmit = (e) => {
+  onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const { email, password, errors } = this.state;
@@ -87,7 +90,7 @@ class RegisterForm extends React.Component<
         // Create a user in your Firebase realtime database
         return (
           authUser.user &&
-          this.props.firebase.user(authUser.user.uid).set({
+          this.props.firebase.createUser(authUser.user.uid, {
             email,
           })
         );

@@ -40,11 +40,14 @@ class LoginForm extends React.Component<
   }
 
   // Event listener for change in input fields.
-  onChange = (e) =>
-    this.setState({ ...this.state, [e.target.name]: e.target.value });
+  onChange = (e: React.FormEvent<HTMLInputElement>) =>
+    this.setState({
+      ...this.state,
+      [e.currentTarget.name]: e.currentTarget.value,
+    });
 
   // Event listener for form submission.
-  onSubmit = (e) => {
+  onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const { email, password } = this.state;
@@ -73,7 +76,7 @@ class LoginForm extends React.Component<
     const { email, password, redirect } = this.state;
 
     if (redirect) {
-      return <Redirect to='/home' />;
+      return <Redirect to='/' />;
     }
 
     return (

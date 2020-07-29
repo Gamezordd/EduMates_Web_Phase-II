@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import { UserObject } from './interface';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -45,12 +46,14 @@ class Firebase {
   doSendEmailVerification = () =>
     this.auth.currentUser &&
     this.auth.currentUser.sendEmailVerification({
-      url: 'http://localhost:3000',
+      url: process.env.REACT_APP_URL ? process.env.REACT_APP_URL : '',
     });
 
   users = () => this.db.ref('users');
 
   user = (uid: string) => this.db.ref(`users/${uid}`);
+
+  createUser = (uid: string, data: UserObject) => this.user(uid).set(data);
 }
 
 export default Firebase;
